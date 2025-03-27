@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Удаление пользователя</title>
+</head>
+<style>
+    body {
+        background-color: #708090;
+    }
+
+    .delete-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #708090;
+    }
+
+    .delete-confirm {
+        text-align: center;
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 10px;
+        max-width: 500px;
+        width: 100%;
+        font-size: 30px;
+    }
+
+    .btn-delete {
+        padding: 12px 30px;
+        background-color: #ff4141;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+
+    .btn-back {
+        padding: 12px 30px;
+        background-color: #ff4141;
+        color: white;
+        border-radius: 5px;
+        font-size: 16px;
+        text-align: center;
+        cursor: pointer;
+        border: none;
+    }
+</style>
+<body>
+<form th:method="POST" th:action="@{'/users/delete?id=' + ${user.getId()}}" class="delete-form">
+    <div class="delete-confirm">
+        <p>Вы действительно хотите удалить данного пользователя?</p>
+        <input class="btn-delete" type="submit" value="Да">
+        <input class="btn-back" type="button" value="Назад" onclick="window.location.href='/users/'">
+    </div>
+</form>
+</body>
+</html>
