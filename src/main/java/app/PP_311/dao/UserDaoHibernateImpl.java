@@ -2,6 +2,7 @@ package app.PP_311.dao;
 
 import app.PP_311.model.User;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
@@ -21,9 +22,19 @@ public class UserDaoHibernateImpl implements UserDaoHibernate {
     }
 
     @Override
-    public void deleteById(int id) {
-        User u = em.find(User.class, id);
+    public void deleteById(Long id) {
+        User u = findById(id);
         em.remove(u);
+    }
+
+    @Override
+    public void update(User user, Long id) {
+        User u = findById(id);
+        u.setFirstName(user.getFirstName());
+        u.setLastName(user.getLastName());
+        u.setEmail(user.getEmail());
+        u.setAge(user.getAge());
+        em.merge(u);
     }
 
     @Override
@@ -32,7 +43,10 @@ public class UserDaoHibernateImpl implements UserDaoHibernate {
     }
 
     @Override
-    public User findById(int id) {
+    public User findById(Long id) {
+        if (em.find(User.class, id) == null) {
+            throw new EntityNotFoundException("User with id " + id + " not found");
+        }
         return em.find(User.class, id);
     }
 }

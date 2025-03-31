@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserDaoHibernate userDao;
@@ -27,18 +26,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         userDao.deleteById(id);
     }
 
     @Override
-    public void update(User user, int id) {
-        User u = userDao.findById(id);
-        u.setFirstName(user.getFirstName());
-        u.setLastName(user.getLastName());
-        u.setEmail(user.getEmail());
-        u.setAge(user.getAge());
-        userDao.save(u);
+    public void update(User user, Long id) {
+        userDao.update(user, id);
     }
 
     @Override
@@ -47,7 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(int id) {
+    public User findById(Long id) {
         return userDao.findById(id);
     }
 }
